@@ -1,3 +1,6 @@
+from inventory import *
+
+
 def test_buy_and_sell_nikes_adidas():
     inventory = Inventory()
     assert inventory.limit == 100
@@ -13,4 +16,16 @@ def test_buy_and_sell_nikes_adidas():
     assert inventory.total_items == 13
 
     inventory.remove_stock('Adidas Sweatpants', 1)
-    assert  inventory.total_items == 12
+    assert inventory.total_items == 12
+
+
+def test_default_inventory():
+    inventory = Inventory()
+    assert inventory.limit == 100
+    assert inventory.total_items == 0
+
+
+def test_custom_inventory_limit():
+    inventory = Inventory(limit=25)
+    assert inventory.limit == 25
+    assert inventory.total_items == 0
