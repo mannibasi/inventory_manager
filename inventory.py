@@ -19,10 +19,28 @@ class Inventory:
         }
         self.total_items += quantity
 
+    def remove_stock(self, name, quantity):
+        if quantity <= 0:
+            raise InvalidQuantityException(
+                'Cannot remove a quantity of {}. Must remove at least 1 item'.format(quantity))
+        if name not in self.stocks:
+            raise ItemNotFoundException(
+                'Could not find {} in our stocks. Cannot remove non-existing stock'.format(name))
+        if self.stocks[name]['quantity'] - quantity <= 0:
+            raise InvalidQuantityException(
+                'Cannot remove these {} items. Only {} items are in stock'.format(quantity,
+                                                                                  self.stocks[name]['quantity']))
+        self.stocks[name]['quantity'] -= quantity
+        self.total_items -= quantity
+
 
 class InvalidQuantityException(Exception):
     pass
 
 
 class NoSpaceException(Exception):
+    pass
+
+
+class ItemNotFoundException(Exception):
     pass
