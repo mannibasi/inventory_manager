@@ -6,8 +6,16 @@ class Inventory:
         self.stocks = {}
 
     def add_new_stock(self, name, price, quantity):
+        if quantity <= 0:
+            raise InvalidQuantityException(
+                'Cannot add a quantity of {}. All new stocks must have at least 1 item'.format(quantity))
+
         self.stocks[name] = {
             'price': price,
             'quantity': quantity
         }
         self.total_items += quantity
+
+
+class InvalidQuantityException(Exception):
+    pass
