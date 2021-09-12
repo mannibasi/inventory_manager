@@ -9,7 +9,10 @@ class Inventory:
         if quantity <= 0:
             raise InvalidQuantityException(
                 'Cannot add a quantity of {}. All new stocks must have at least 1 item'.format(quantity))
-
+        if self.total_items + quantity > self.limit:
+            remaining_space = self.limit - self.total_items
+            raise NoSpaceException(
+                'Cannot add these {} items. Only {} more items can be stored'.format(quantity, remaining_space))
         self.stocks[name] = {
             'price': price,
             'quantity': quantity
@@ -18,4 +21,8 @@ class Inventory:
 
 
 class InvalidQuantityException(Exception):
+    pass
+
+
+class NoSpaceException(Exception):
     pass
