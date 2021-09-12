@@ -46,13 +46,15 @@ def test_add_new_stock_success(no_stock_inventory):
 
 @pytest.mark.parametrize('name,price,quantity,exception', [
     ('Test Jacket', 10.00, 0, InvalidQuantityException(
-        'Cannot add a quantity of 0. All new stocks must have at least 1 item'))
+        'Cannot add a quantity of 0. All new stocks must have at least 1 item')),
+    ('Test Jacket', 10.00, 25, NoSpaceException(
+        'Cannot add these 25 items. Only 10 more items can be stored'))
 ])
 def test_add_new_stock_bad_input(name, price, quantity, exception):
     inventory = Inventory(10)
     try:
         inventory.add_new_stock(name, price, quantity)
-    except InvalidQuantityException as inst:
+    except (InvalidQuantityException, NoSpaceException) as inst:
         assert isinstance(inst, type(exception))
         assert inst.args == exception.args
     else:
