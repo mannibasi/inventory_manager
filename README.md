@@ -7,12 +7,11 @@ python -m venv env
 
 pip install --upgrade pip
 pip install pytest
-pip install coverage
 pip install pytest-cov
 ```
 ```
 pytest
-pytest --cov=primes
+pytest --cov=inventory
 ```
 
 See related TDD blog here:
