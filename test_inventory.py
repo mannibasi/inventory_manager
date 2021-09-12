@@ -50,10 +50,9 @@ def test_add_new_stock_success(no_stock_inventory):
     ('Test Jacket', 10.00, 25, NoSpaceException(
         'Cannot add these 25 items. Only 10 more items can be stored'))
 ])
-def test_add_new_stock_bad_input(name, price, quantity, exception):
-    inventory = Inventory(10)
+def test_add_new_stock_bad_input(no_stock_inventory, name, price, quantity, exception):
     try:
-        inventory.add_new_stock(name, price, quantity)
+        no_stock_inventory.add_new_stock(name, price, quantity)
     except (InvalidQuantityException, NoSpaceException) as inst:
         assert isinstance(inst, type(exception))
         assert inst.args == exception.args
